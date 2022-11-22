@@ -1,2 +1,0 @@
-# NumMethLab
-Dddd
