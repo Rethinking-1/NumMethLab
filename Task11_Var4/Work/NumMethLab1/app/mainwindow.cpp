@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphMain2U1->yAxis->setLabel("u(x)");
     ui->graphMain2U2->xAxis->setLabel("x");
     ui->graphMain2U2->yAxis->setLabel("u'(x)");
+    //ui->graftrue->xAxis->setLabel("U(x) - истинное");//////////////////
 }
 
 MainWindow::~MainWindow()
@@ -41,6 +42,7 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     QVector<double> x(M.grid.begin(), M.grid.end());
     QVector<double> y1(M.final_num_values_1.begin(), M.final_num_values_1.end());
     QVector<double> y2(M.final_num_values_2.begin(), M.final_num_values_2.end());
+    QVector<double> y_true(M.true_values_1.begin(), M.true_values_1.end());
     //qDebug() << "u1:\n" << y1 << "\nu2:\n" << y2 << "\nx:\n" << x;
     int j = 0;
     QVector<int> delim;
@@ -63,6 +65,7 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     {
         y1_parts[i] = QVector<double>(y1.begin()+delim[i]-1, y1.begin()+delim[i+1]);
         y2_parts[i] = QVector<double>(y2.begin()+delim[i]-1, y2.begin()+delim[i+1]);
+
        // qDebug() << "\nparts " << i << ":\n" << y1_parts[i];
     }
     for (int i = 0; i < y1_parts.size(); i++)
@@ -86,7 +89,12 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     ui->graphMain2U2->graph(0)->setData(x, y2, true);
     ui->graphMain2U2->graph(0)->rescaleAxes();
     ui->graphMain2U2->replot();
-
+/////////////////////
+    //ui->graftrue->addGraph();
+    //ui->graftrue->graph(0)->setData(x, y_true, true);
+    //ui->graftrue->graph(0)->rescaleAxes();
+    //ui->graftrue->replot();
+    ////////////////////////
     M.grid_step.pop_back();
     M.grid_step.insert(M.grid_step.begin(), h0);
 
@@ -104,8 +112,8 @@ void MainWindow::on_pushButtonMain2Run_clicked()
         QTableWidgetItem *v2 = new QTableWidgetItem(QString::number(M.num_values_2[i]));
         QTableWidgetItem *v2_2 = new QTableWidgetItem(QString::number(M.d_num_values_2[i]));
         QTableWidgetItem *diff2 = new QTableWidgetItem(QString::number(M.num_values_2[i] - M.d_num_values_2[i]));
-        double olp1 = std::abs(M.d_num_values_1[i] - M.num_values_1[i]) / 15 * 16;
-        double olp2 = std::abs(M.d_num_values_2[i] - M.num_values_2[i]) / 15 * 16;
+        double olp1 = std::abs(M.d_num_values_1[i] - M.num_values_1[i]) / 15 ;
+        double olp2 = std::abs(M.d_num_values_2[i] - M.num_values_2[i]) / 15;
         double tmp1 = std::max(olp1, olp2);
         if (tmp1 > maxOLP)
             maxOLP = tmp1;
@@ -140,8 +148,8 @@ void MainWindow::on_pushButtonMain2Run_clicked()
             + "\nНачальная скорость груза " + QString::number(M.num_values_2.front())
             + "\nНачальное время счёта = 0 сек.\nУсловие остановки счёта = " + QString::number(M.right_border) + " cек."
             + "\nРасстояние до правой границы счёта = "   +
-            (QString::number(M.right_border - M.grid.back())) + " cек.";
-             //    ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек.";
+            (QString::number(//M.right_border - M.grid.back())) + " cек.";
+                 ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек.";
             ref = ref +(ctl? "\nКонтроль модуля локальной погрешности включён\nEps граничный = " +  QString::number(M.eps)
                            : "\nКонтроль модуля локальной погрешности выключен");
 
