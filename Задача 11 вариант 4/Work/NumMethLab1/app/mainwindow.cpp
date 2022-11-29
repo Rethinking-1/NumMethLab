@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle("Task 11 var 4");
-    ui->tableWidgetMain2->setHorizontalHeaderLabels(QStringList() << "Xn" << "v_n" << "v_2n" << "v_n -v_2n" << "v'_n" << "v'_2n" << "v'_n - v'_2n" << "ОЛП" << "Hn" << "divs" << "pows");
+    setWindowTitle("Денисов Д.С., 382003_3");
+    ui->tableWidgetMain2->setHorizontalHeaderLabels(QStringList() << "Xn" << "v_n" << "v_2n" << "v_n -v_2n" << "v'_n" << "v'_2n" << "v'_n - v'_2n" << "ОЛП" << "h_n" << "Уменьшений шага" << "Увеличений шага");
     ui->tableWidgetMain2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->graphMain2Faz->xAxis->setLabel("u(x)");
@@ -16,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphMain2U1->yAxis->setLabel("u(x)");
     ui->graphMain2U2->xAxis->setLabel("x");
     ui->graphMain2U2->yAxis->setLabel("u'(x)");
+    ui->graphMain2U2->xAxis2->setLabel("Зависимость скорости груза от времени.");
     //ui->graftrue->xAxis->setLabel("U(x) - истинное");//////////////////
 }
 
@@ -105,7 +108,7 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     int indMaxStep = 0, indMinStep = 0;
     for (int i = 0; i < M.grid.size(); i++)
     {
-        QTableWidgetItem *x = new QTableWidgetItem(QString::number(M.grid[i]));
+        QTableWidgetItem *x = new QTableWidgetItem(QString::number(M.grid[i],'g',15));//Точность
         QTableWidgetItem *v1 = new QTableWidgetItem(QString::number(M.num_values_1[i]));
         QTableWidgetItem *v1_2 = new QTableWidgetItem(QString::number(M.d_num_values_1[i]));
         QTableWidgetItem *diff1 = new QTableWidgetItem(QString::number(M.num_values_1[i] - M.d_num_values_1[i]));
@@ -143,27 +146,39 @@ void MainWindow::on_pushButtonMain2Run_clicked()
         ui->tableWidgetMain2->setItem(i, 10, c2);
     }
 
-    QString ref =  "\tСправка\nМетод Рунге-Кутта явный порядка p = 4 \nНачальное отклонение груза " + QString::number(M.num_values_1.front()) + "см"
-            + "\nЧисло шагов метода: "   + QString::number(M.grid.size()-1)
-            + "\nНачальная скорость груза " + QString::number(M.num_values_2.front())
-            + "\nНачальное время счёта = 0 сек.\nУсловие остановки счёта = " + QString::number(M.right_border) + " cек."
-            + "\nРасстояние до правой границы счёта = "   +
-            (QString::number(//M.right_border - M.grid.back())) + " cек.";
-                 ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек.";
+    QString ref =  "\tСправка \nВариант №4 Задание 11 Команда №3\nМетод Рунге-Кутта явный порядка p = 4\nmu\" + cu' + ku =0 , u = u(x)\nПараметры задачи коши:\nu(0) = "
+            + QString::number(M.num_values_1[0]) +  "см.,\tu'(0) = " + QString::number(M.num_values_2[0])
+            + "\nМасса груза = " + QString::number(M.m) + "кг"
+            + "\nКоэффициент демпфирования = " + QString::number(M.c) + "Н/см"
+            + "\nЖёсткость пружины = " + QString::number(M.k) + " Н с/см^2\nНачальное время счёта = 0 сек.";
             ref = ref +(ctl? "\nКонтроль модуля локальной погрешности включён\nEps граничный = " +  QString::number(M.eps)
-                           : "\nКонтроль модуля локальной погрешности выключен");
+                   : "\nКонтроль модуля локальной погрешности выключен");
 
-            ref+= "\n\nМасса груза = " + QString::number(M.m) + "кг"
-            + "\nЖёсткость пружины = " + QString::number(M.k) + " Н с/см^2"
-            + "\nКоэффициент демпфирования:" + QString::number(M.c) + "Н/см"
+            ref += "\n---------->Условие остановки счёта\nМаксимальное время счёта = " + QString::number(M.right_border) + " cек."
+            + "\nМаксимальное число шагов метода " + QString::number(M.max_steps)
 
-            + "\n\nmax|ОЛП| = " + QString::number(maxOLP)
+            + "\n---------->Результат расчёта"
+              //"\nВремя остановки счёта " +
+             //(QString::number(//M.grid.back(),'g', 15)) + " cек."
+             //        ((M.right_border - M.grid.back()) < 1.68756e-13)?M.right_border : M.grid.back())) + " cек."
+
+            + "\nПоследний шаг метода "   + QString::number(M.grid.size()-1)
+
+            + "\nРасстояние до правой границы счёта = "   +
+              (QString::number(//M.right_border - M.grid.back(),'g', 15)) + " cек."
+                      ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек."
+
+            + "\n---------->Последняя найденная точка численной траектории"
+            + "\nКонечное положение груза " + QString::number(M.final_num_values_1.back()) + "см."
+            + "\nКонечная скорость груза  " + QString::number(M.final_num_values_2.back()) + "см."
+            + "\nmax|ОЛП| = " + QString::number(maxOLP)
             + "\nОбщее число удвоений шага: " + QString::number(M.mult)
             + "\nОбщее число делений шага: " + QString::number(M.div)
             + "\nМаксимальный шаг = " + QString::number(M.grid_step[indMaxStep])
             + " при x = " + QString::number(M.grid[indMaxStep])
             + "\nМинимальный шаг = " + QString::number(M.grid_step[indMinStep])
             + " при x = " + QString::number(M.grid[indMinStep]);
+
     qDebug() << "M.right_border:" << M.right_border << "M.grid.back():" << M.grid.back() << "M.right_border - M.grid.back():" << M.right_border - M.grid.back();
     ui->textBrowserMain2->setText(ref);
 }

@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cmath>
-
+//#define BRED_PREC  %.10f
 class Task
 {
 public:
@@ -22,7 +22,7 @@ public:
 	int mult;
 	int div;
 	double right_border;
-	double eps;
+    double eps;//Контроль локальной погрешности
 	bool ctrl_local_err;
 	int max_steps;
     double m;

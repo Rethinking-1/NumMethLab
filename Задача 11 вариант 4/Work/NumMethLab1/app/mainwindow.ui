@@ -85,7 +85,7 @@
               <item row="1" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>c:</string>
+                 <string>Коэффициент демпфирования          c:</string>
                 </property>
                </widget>
               </item>
@@ -99,7 +99,7 @@
               <item row="2" column="0">
                <widget class="QLabel" name="label_3">
                 <property name="text">
-                 <string>k:</string>
+                 <string>Коэффициент жесткости пружины    k:</string>
                 </property>
                </widget>
               </item>
@@ -113,7 +113,7 @@
               <item row="3" column="0">
                <widget class="QLabel" name="label_4">
                 <property name="text">
-                 <string>u(0):</string>
+                 <string>Начальное положение груза        u(0):</string>
                 </property>
                </widget>
               </item>
@@ -127,7 +127,7 @@
               <item row="4" column="0">
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>u'(0):</string>
+                 <string>Начальная скорость груза            u'(0):</string>
                 </property>
                </widget>
               </item>
@@ -141,7 +141,7 @@
               <item row="5" column="0">
                <widget class="QLabel" name="label_6">
                 <property name="text">
-                 <string>x_max:</string>
+                 <string>Максимальное время счёта        x_max:</string>
                 </property>
                </widget>
               </item>
@@ -155,7 +155,7 @@
               <item row="6" column="0">
                <widget class="QLabel" name="label_7">
                 <property name="text">
-                 <string>h0:</string>
+                 <string>Начальный шаг                                h0:</string>
                 </property>
                </widget>
               </item>
@@ -169,7 +169,7 @@
               <item row="7" column="0">
                <widget class="QLabel" name="label_8">
                 <property name="text">
-                 <string>Nmax:</string>
+                 <string>Максимальное число итераций Nmax:</string>
                 </property>
                </widget>
               </item>
@@ -190,7 +190,7 @@
               <item row="10" column="0">
                <widget class="QRadioButton" name="radioButtonMain2CLP">
                 <property name="text">
-                 <string>КЛП</string>
+                 <string>Контроль локальной погрешности</string>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
@@ -220,7 +220,7 @@
               <item row="0" column="0">
                <widget class="QLabel" name="Label_1">
                 <property name="text">
-                 <string>m:</string>
+                 <string>Масса груза                                        m:</string>
                 </property>
                </widget>
               </item>
