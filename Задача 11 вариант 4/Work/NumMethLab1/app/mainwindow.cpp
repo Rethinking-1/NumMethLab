@@ -9,17 +9,38 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Денисов Д.С., 382003_3");
-    ui->tableWidgetMain2->setHorizontalHeaderLabels(QStringList() << "Xn" << "v_n" << "v_2n" << "v_n -v_2n" << "v'_n" << "v'_2n" << "v'_n - v'_2n" << "ОЛП" << "h_n" << "Уменьшений шага" << "Увеличений шага");
+    ui->tableWidgetMain2->setHorizontalHeaderLabels(QStringList() << "Xn" << "v_n" << "v_2n" << "v_n -v_2n" << "v'_n" << "v'_2n" << "v'_n - v'_2n" << "||ОЛП||" << "h_n" << "Уменьшений шага" << "Увеличений шага");
     ui->tableWidgetMain2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->graphMain2Faz->xAxis->setLabel("u(x)");
     ui->graphMain2Faz->yAxis->setLabel("u'(x)");
+    ui->graphMain2Faz->xAxis2->setLabel("Фазовый портрет.");
+    ui->graphMain2Faz->xAxis2->setVisible(true);
+    ui->graphMain2Faz->xAxis2->setTickLabels(false);
+    ui->graphMain2Faz->xAxis2->setTicks(false);
+    ui->graphMain2Faz->yAxis2->setVisible(true);
+    ui->graphMain2Faz->yAxis2->setTickLabels(false);
+    ui->graphMain2Faz->yAxis2->setTicks(false);
+
     ui->graphMain2U1->xAxis->setLabel("x");
     ui->graphMain2U1->yAxis->setLabel("u(x)");
+    ui->graphMain2U1->xAxis2->setLabel("Зависимость смещения груза от времени.");
+    ui->graphMain2U1->xAxis2->setVisible(true);
+    ui->graphMain2U1->xAxis2->setTickLabels(false);
+    ui->graphMain2U1->xAxis2->setTicks(false);
+    ui->graphMain2U1->yAxis2->setVisible(true);
+    ui->graphMain2U1->yAxis2->setTickLabels(false);
+    ui->graphMain2U1->yAxis2->setTicks(false);
+
     ui->graphMain2U2->xAxis->setLabel("x");
     ui->graphMain2U2->yAxis->setLabel("u'(x)");
     ui->graphMain2U2->xAxis2->setLabel("Зависимость скорости груза от времени.");
-    //ui->graftrue->xAxis->setLabel("U(x) - истинное");//////////////////
+    ui->graphMain2U2->xAxis2->setVisible(true);
+    ui->graphMain2U2->xAxis2->setTickLabels(false);
+    ui->graphMain2U2->xAxis2->setTicks(false);
+    ui->graphMain2U2->yAxis2->setVisible(true);
+    ui->graphMain2U2->yAxis2->setTickLabels(false);
+    ui->graphMain2U2->yAxis2->setTicks(false);
 }
 
 MainWindow::~MainWindow()
@@ -108,7 +129,8 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     int indMaxStep = 0, indMinStep = 0;
     for (int i = 0; i < M.grid.size(); i++)
     {
-        QTableWidgetItem *x = new QTableWidgetItem(QString::number(M.grid[i],'g',15));//Точность
+        M.grid_step[0] = 0;
+        QTableWidgetItem *x = new QTableWidgetItem(QString::number(M.grid[i]));//Точность ,'g',15
         QTableWidgetItem *v1 = new QTableWidgetItem(QString::number(M.num_values_1[i]));
         QTableWidgetItem *v1_2 = new QTableWidgetItem(QString::number(M.d_num_values_1[i]));
         QTableWidgetItem *diff1 = new QTableWidgetItem(QString::number(M.num_values_1[i] - M.d_num_values_1[i]));
