@@ -182,13 +182,15 @@ void MainWindow::on_pushButtonMain2Run_clicked()
                    : "\nКонтроль модуля локальной погрешности выключен");
 
             ref += "\n---------->Результат расчёта\nРасстояние до правой границы счёта = "   +
-              //"\nВремя остановки счёта " +
-             //(QString::number(//M.grid.back(),'g', 15)) + " cек."
-             //        ((M.right_border - M.grid.back()) < 1.68756e-13)?M.right_border : M.grid.back())) + " cек."
+
+                    (QString::number(//M.right_border - M.grid.back(),'g', 15)) + " cек."
+                            ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек."
+              "\nВремя остановки счёта " +
+
+             (QString::number(//M.grid.back(),'g', 15)) + " cек."
+                    ((M.right_border - M.grid.back()) < 1.68756e-13)?M.right_border : M.grid.back())) + " cек."
 
 
-              (QString::number(//M.right_border - M.grid.back(),'g', 15)) + " cек."
-                      ((M.right_border - M.grid.back()) < 1.68756e-13)?0: M.right_border - M.grid.back())) + " cек."
             + "\nПоследний шаг метода "   + QString::number(M.grid.size()-1)
 
             + "\n---------->Последняя найденная точка численной траектории"
