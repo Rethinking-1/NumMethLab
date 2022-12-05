@@ -29,6 +29,7 @@ public:
     double c;
     double k;
     int n = 0;
+    double initial_step;
 
     Task(double m = 1.0,double c = 0.15, double k = 2.0, double right_border = 1.0, double initial_value = 10.0,double initial_value_2 = 0.0, double initial_step = 0.01, int max_steps = 1000, bool ctrl_local_err = false, double eps = 1e-8);
     double TrueFunc(double x);

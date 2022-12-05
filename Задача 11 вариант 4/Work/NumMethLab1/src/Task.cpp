@@ -9,6 +9,7 @@ Task::Task(double m,double c, double k, double right_border, double initial_valu
     this->eps = eps;
     this->max_steps = max_steps;
     this->right_border = right_border;
+    this->initial_step = initial_step;
     mult = 0;
     div = 0;
     mult2.push_back(0);
