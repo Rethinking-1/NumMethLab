@@ -126,7 +126,7 @@ double Task::DNumFunc2(double v1, double v2, double h)
 }
 
 
-void Task::MethodStep()
+void Task::MethodStep(int P)
 {
     double h = grid_step.back();
     const double v1 = NumFunc(final_num_values_1.back(), final_num_values_2.back(), h);
@@ -139,7 +139,7 @@ void Task::MethodStep()
     double s2 = abs(vD2 - v2) / 15;
     double s = std::max(s1, s2);
 
-    if (s > eps && ctrl_local_err)
+    if (s > eps && ctrl_local_err && P!=1)
     {
          grid_step.back()/=2;
          div++;
@@ -149,7 +149,7 @@ void Task::MethodStep()
     {
         const double x = grid.back() + h;
         const double u = TrueFunc(x);         ///////////////////////////
-        if (ctrl_local_err && s < eps / 32)
+        if (ctrl_local_err && s < eps / 32 && P!=1)
         {
             h *= 2;
             mult++;
@@ -168,40 +168,24 @@ void Task::MethodStep()
         final_num_values_2.push_back(v2 + 16 * s2);
     }
 }
-
 void Task::Run()
 {
-    int i = 0;
+     n = 0;
     while (grid.back() + grid_step.back() <= right_border && n < max_steps)
     {
-        MethodStep();
         n++;
-        i++;
+        MethodStep(0);
     }
-    //Последний шаг
-   /* while(ctrl_local_err && grid.back() + grid_step.back() > right_border && right_border - grid.back()> eps)
-    {
-        grid_step.back()/=2;
-        div++;
-    }
-    if(ctrl_local_err  &&  right_border - grid.back()>= eps && grid.back() + grid_step.back() <= right_border && i < max_steps)
-    {
-        MethodStep();
-    }*/
 
-    if(ctrl_local_err && grid.back() + grid_step.back() > right_border && right_border - grid.back()> eps)
+
+    if (right_border - grid.back() > 1e-8 && grid.back() + grid_step.back() > right_border )
     {
-        while(ctrl_local_err && grid.back() + grid_step.back() > right_border && right_border - grid.back()> eps)
-        {
-            while(ctrl_local_err && grid.back() + grid_step.back() > right_border && right_border - grid.back()> eps)
-            {
-                grid_step.back()/=2;
-                div++;
-            }
-            MethodStep();
-        }
+
+        grid_step.back() = right_border - grid.back();
+        MethodStep(1);
     }
-    //qDebug() << "right_border - grid.back():" << right_border - grid.back();
+   qDebug() << "right_border: "<< right_border<<" grid.back(): " << grid.back();
+    qDebug() << "right_border - grid.back():" << right_border - grid.back();
 }
 
 void Task::Print()

@@ -39,7 +39,7 @@ public:
 	double NumFunc2(double v1, double v2, double h);
 	double DNumFunc(double v1, double v2, double h);
 	double DNumFunc2(double v1, double v2, double h);
-	void MethodStep();
+    void MethodStep(int P);
 	void Run();
 	void Print();
 };
