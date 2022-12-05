@@ -126,7 +126,7 @@ void MainWindow::on_pushButtonMain2Run_clicked()
     ui->tableWidgetMain2->setRowCount(0);
 
     double maxOLP = 0;
-    int indMaxStep = 0, indMinStep = 0;
+    int indMaxStep = 0, indMinStep = 1;
     for (int i = 0; i < M.grid.size(); i++)
     {
         M.grid_step[0] = 0;
@@ -146,7 +146,7 @@ void MainWindow::on_pushButtonMain2Run_clicked()
         double tmp2 = M.grid_step[i];
         if (M.grid_step[indMaxStep] < tmp2)
             indMaxStep = i;
-        if (M.grid_step[indMinStep] > tmp2)
+        if (M.grid_step[indMinStep] > tmp2 && i!= 0)
             indMinStep = i;
         QTableWidgetItem *h = new QTableWidgetItem(QString::number(M.grid_step[i]));
         int tmp4 = i > 0 ? M.div2[i] - M.div2[i-1] : 0;
